@@ -1,4 +1,4 @@
-image: /home/juanc/my_map.pgm
+image: /home/juanc/angle_world.pgm
 mode: trinary
 resolution: 0.05
 origin: [-3.85, -3.26, 0]
