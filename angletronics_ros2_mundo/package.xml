@@ -4,17 +4,19 @@
   <name>angletronics_ros2_mundo</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
-  <maintainer email="angletronics@angle.com">asun</maintainer>
+  <maintainer email="juancarloshr123@gmail.com">juanc</maintainer>
   <license>TODO: License declaration</license>
 
   <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
   <depend>gazebo_ros_pkgs</depend>
   <depend>geometry_msgs</depend>
   <depend>nav_msgs</depend>
-  <depend>rclcpp</depend>
   <depend>sensor_msgs</depend>
   <depend>tf2</depend>
-  <exec_depend>turtlebot3_description</exec_depend>
+  <depend>turtlebot3_gazebo</depend>
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
 
