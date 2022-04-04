@@ -2,7 +2,7 @@ from setuptools import setup
 import os # incluir esta línea
 from glob import glob # incluir esta línea
 
-package_name = 'angletronics_ros_IPPublisher'
+package_name = 'angletronics_ros_ippublisher'
 
 setup(
     name=package_name,
@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'simple_angletronics_ros_IPPublisher = angletronics_ros_IPPublisher.simple_angletronics_ros_IPPublisher:main' #inlcuir
+            'simple_angletronics_ros_ippublisher = angletronics_ros_ippublisher.simple_angletronics_ros_ippublisher:main' #inlcuir
         ],
     },
 )
