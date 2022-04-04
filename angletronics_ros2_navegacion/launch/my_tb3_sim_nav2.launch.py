@@ -82,6 +82,7 @@ def generate_launch_description():
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
         default_value=os.path.join(project_dir, 'config', 'angle_world.yaml'),
+        #default_value=os.path.join(project_dir, 'config', 'real_angle_world.yaml'),
         description='Full path to map file to load')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
@@ -146,6 +147,7 @@ def generate_launch_description():
         cmd=['gzclient'],
         cwd=[launch_dir], output='screen')
 
+
     urdf = os.path.join(burger_dir, 'urdf', 'turtlebot3_burger.urdf')
 
     start_robot_state_publisher_cmd = Node(
@@ -158,6 +160,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}],
         remappings=remappings,
         arguments=[urdf])
+
 
     rviz_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(launch_dir, 'rviz_launch.py')),
@@ -203,6 +206,7 @@ def generate_launch_description():
     ld.add_action(start_gazebo_client_cmd)
 
     # Add the actions to launch all of the navigation nodes
+    #XXX:HOJO cambiar
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(rviz_cmd)
     ld.add_action(bringup_cmd)
