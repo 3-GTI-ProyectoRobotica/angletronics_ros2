@@ -13,6 +13,7 @@ schematypens="http://www.w3.org/2001/XMLSchema"?>
  <buildtool_depend>ament_cmake</buildtool_depend>
  <exec_depend>angletronics_ros2_mundo</exec_depend>
  <exec_depend>angletronics_ros2_navegacion</exec_depend>
+ <exec_depend>angletronics_ros_IPPublisher</exec_depend>
  <export>
  <build_type>ament_cmake</build_type>
  </export>
