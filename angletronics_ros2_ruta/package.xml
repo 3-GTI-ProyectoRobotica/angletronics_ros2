@@ -1,14 +1,15 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>my_nav2_system</name>
+  <name>angletronics_ros2_ruta</name>
   <version>0.0.0</version>
   <description>TODO: Package description</description>
   <maintainer email="juancarloshr123@gmail.com">juanc</maintainer>
   <license>TODO: License declaration</license>
 
   <depend>rclpy</depend>
-  <depend>nav_msgs</depend>
+  <depend>rclpy.action</depend>
+  <depend>angletronics_ros2_custom_interface</depend>
   <depend>geometry_msgs</depend>
 
   <test_depend>ament_copyright</test_depend>

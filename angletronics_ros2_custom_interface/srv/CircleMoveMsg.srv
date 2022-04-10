@@ -1,0 +1,4 @@
+string direccion # Movimiento circular de radio 1
+            # "girar"
+---
+bool success #respuesta

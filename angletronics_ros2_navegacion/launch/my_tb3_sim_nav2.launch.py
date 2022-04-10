@@ -30,7 +30,7 @@ def generate_launch_description():
     # Get the launch directory
     bringup_dir = get_package_share_directory('nav2_bringup')
     launch_dir = os.path.join(bringup_dir, 'launch')
-    project_dir = get_package_share_directory('my_nav2_system')
+    project_dir = get_package_share_directory('angletronics_ros2_navegacion')
     turtlebot3_dir = get_package_share_directory('turtlebot3_gazebo')
     burger_dir = get_package_share_directory('turtlebot3_description')
     
@@ -81,7 +81,8 @@ def generate_launch_description():
 
     declare_map_yaml_cmd = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(project_dir, 'config', 'angle_world.yaml'),
+        #default_value=os.path.join(project_dir, 'config', 'angle_world.yaml'),
+        default_value=os.path.join(project_dir, 'config', 'real_angle_world.yaml'),
         description='Full path to map file to load')
 
     declare_use_sim_time_cmd = DeclareLaunchArgument(
@@ -131,7 +132,7 @@ def generate_launch_description():
     declare_world_cmd = DeclareLaunchArgument(
         'world',
         #default_value= os.path.join(get_package_share_directory('turtlebot3_gazebo'),'worlds/turtlebot3_worlds/burger.model'),
-        default_value= '/home/juanc/turtlebot3_ws/src/angletronics_ros2_mundo/world/burger.model',
+        default_value= '/home/juanc/turtlebot3_ws/src/angletronics_ros2/angletronics_ros2_mundo/world/burger.model',
         #/home/juanc/turtlebot3_ws/src/angletronics_ros2_mundo/world/burger.model
         description='Full path to world model file to load')
 
@@ -146,6 +147,7 @@ def generate_launch_description():
         cmd=['gzclient'],
         cwd=[launch_dir], output='screen')
 
+
     urdf = os.path.join(burger_dir, 'urdf', 'turtlebot3_burger.urdf')
 
     start_robot_state_publisher_cmd = Node(
@@ -158,6 +160,7 @@ def generate_launch_description():
         parameters=[{'use_sim_time': use_sim_time}],
         remappings=remappings,
         arguments=[urdf])
+
 
     rviz_cmd = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(os.path.join(launch_dir, 'rviz_launch.py')),
@@ -203,6 +206,7 @@ def generate_launch_description():
     ld.add_action(start_gazebo_client_cmd)
 
     # Add the actions to launch all of the navigation nodes
+    #XXX:HOJO cambiar
     ld.add_action(start_robot_state_publisher_cmd)
     ld.add_action(rviz_cmd)
     ld.add_action(bringup_cmd)

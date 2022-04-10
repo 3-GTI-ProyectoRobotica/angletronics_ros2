@@ -3,7 +3,7 @@ from glob import glob
 from setuptools import setup
 
 
-package_name = 'my_nav2_system'
+package_name = 'angletronics_ros2_navegacion'
 
 setup(
     name=package_name,
@@ -29,10 +29,10 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'initial_pose_pub = my_nav2_system.initial_pose_pub:main',
-            'load_map = my_nav2_system.load_map:main',
-            'nav_to_pose = my_nav2_system.nav_to_pose:main',
-            'go_to_pose = my_nav2_system.go_to_pose:main'
+            'initial_pose_pub = angletronics_ros2_navegacion.initial_pose_pub:main',
+            'load_map = angletronics_ros2_navegacion.load_map:main',
+            'nav_to_pose = angletronics_ros2_navegacion.nav_to_pose:main',
+            'go_to_pose = angletronics_ros2_navegacion.go_to_pose:main'
         ],
     },
 )
