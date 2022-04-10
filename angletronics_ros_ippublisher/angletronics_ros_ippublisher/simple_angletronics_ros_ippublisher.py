@@ -40,8 +40,8 @@ class SimplePublisher(Node):
         # creamos el mensaje tipo Twist
         msg = PoseWithCovarianceStamped()
         # define la velocidad lineal en el eje x 
-        msg.pose.pose.position.x = 1.775
-        msg.pose.pose.position.y = 0.133
+        msg.pose.pose.position.x = 0.17
+        msg.pose.pose.position.y = -0.89
         msg.pose.pose.position.z = 1.0
         msg.pose.pose.orientation.w = 1.0
         msg.header.frame_id = "map"
