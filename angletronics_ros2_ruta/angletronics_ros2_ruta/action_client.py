@@ -20,15 +20,14 @@ class NavToPose(Node):
         #nombre de la accion
         self._action_client = ActionClient(self, NavigateToPose, 'navigate_to_pose')
 
-    #definimos la funcion de mandar goal
+    
     def send_goal(self, pose):
-        # crea el mensaje tipo Goal
-        # y lo rellena con el argumento dado
+        
         goal_msg = NavigateToPose.Goal()
         goal_msg.pose = pose
-        #espera a que el servidor este listo
+        
         self._action_client.wait_for_server()
-        # envia el goal
+        
         self._send_goal_future = self._action_client.send_goal_async(goal_msg,feedback_callback=self.feedback_callback)
 
         self._send_goal_future.add_done_callback(self.goal_response_callback)
@@ -61,7 +60,7 @@ class NavToPose(Node):
         self.get_logger().info('Received feedback: {0}'.format(feedback))
 
     
-
+#definimos funcion main
 def main(args=None):
     rclpy.init(args=args)
 
