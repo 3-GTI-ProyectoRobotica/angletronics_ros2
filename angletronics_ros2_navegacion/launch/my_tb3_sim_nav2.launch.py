@@ -202,6 +202,7 @@ def generate_launch_description():
     ld.add_action(declare_world_cmd)
 
     # Add any conditioned actions
+    #XXX: QUitar la siguiente linea para realizar pruebas en el entorno REAL
     ld.add_action(start_gazebo_server_cmd)
     ld.add_action(start_gazebo_client_cmd)
 
