@@ -7,6 +7,7 @@ from sensor_msgs.msg import Image
 from rclpy.node import Node
 from rclpy.qos import ReliabilityPolicy, QoSProfile
 from datetime import datetime
+import insertar_registro_reciclaje
 
 
 class Ros2OpenCVImageConverter(Node):   
@@ -134,6 +135,23 @@ def tratamiento_de_imagen(foto):
             nombre= "../Escritorio/GIT/angletronics_web/src/public/assets/fotos_reciclaje/test{}_{}.jpg".format(dt_string,color)
             #nombre = "../Escritorio/GIT/angletronics_web/src/public/assets/fotos_reciclaje/test"+dt_string+"_"+color+".jpg"
             cv2.imwrite(nombre,image_rec)
+
+            #Hacer INSERT EN LA BASE DE DATOS
+            #INSERT INTO `registros_reciclaje`(`imagen`,`clasificacion`,`id_usuario`,`fecha`) VALUES ('ruta','vidrio',15,'2020-09-16 15:14:24')
+            ruta_abs = os.path.abspath(nombre)
+            if color == "azul":
+                clasificacion = "Carton"
+            elif color == "amarillo":
+                clasificacion = "Plastico"
+            else:
+                clasificacion = "Vidrio"
+            #id usuario
+            id_usuario = -1
+            #tratamiento de fecha
+            nueva = dt_string.replace('_','-',2)
+            fecha_mod = nueva.replace('_',' ',1)
+            insertar_registro_reciclaje.insertar_registro(ruta_abs,clasificacion,id_usuario,fecha_mod)
+
             #Mostramos una imagen
             cv2.imshow("Image window",image_rec) #el primer parámetro es el nombre de la ventana, que puedo poner el que quiera
             cv2.waitKey(1) #aprieta una tecla
