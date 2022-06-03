@@ -139,18 +139,12 @@ def tratamiento_de_imagen(foto):
             #Hacer INSERT EN LA BASE DE DATOS
             #INSERT INTO `registros_reciclaje`(`imagen`,`clasificacion`,`id_usuario`,`fecha`) VALUES ('ruta','vidrio',15,'2020-09-16 15:14:24')
             ruta_abs = os.path.abspath(nombre)
-            if color == "azul":
-                clasificacion = "Carton"
-            elif color == "amarillo":
-                clasificacion = "Plastico"
-            else:
-                clasificacion = "Vidrio"
             #id usuario
-            id_usuario = -1
+            id_usuario = 15
             #tratamiento de fecha
             nueva = dt_string.replace('_','-',2)
             fecha_mod = nueva.replace('_',' ',1)
-            insertar_registro_reciclaje.insertar_registro(ruta_abs,clasificacion,id_usuario,fecha_mod)
+            insertar_registro_reciclaje.insertar_registro(ruta_abs,color,id_usuario,fecha_mod)
 
             #Mostramos una imagen
             cv2.imshow("Image window",image_rec) #el primer parámetro es el nombre de la ventana, que puedo poner el que quiera
