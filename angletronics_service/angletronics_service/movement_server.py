@@ -58,22 +58,22 @@ class Service(Node):
     
         
         if request.contenedor == "verde":
-            goal_pose.pose.position.x = 1.40
-            goal_pose.pose.position.y = -1.48
+            goal_pose.pose.position.x = -2.78
+            goal_pose.pose.position.y = -1.07
             goal_pose.pose.orientation.w = 1.0
             
             response.success = True
         elif request.contenedor == "amarillo":
-            goal_pose.pose.position.x = 1.40
-            goal_pose.pose.position.y = -1.48
+            goal_pose.pose.position.x = -2.50
+            goal_pose.pose.position.y = -1.06
             goal_pose.pose.orientation.w = 1.0
 
             response.success = True
 
 
         elif request.contenedor == "azul":
-            goal_pose.pose.position.x = 1.40
-            goal_pose.pose.position.y = -1.48
+            goal_pose.pose.position.x = -3.80
+            goal_pose.pose.position.y = -1.06
             goal_pose.pose.orientation.w = 1.0
             
             response.success = True

@@ -1,3 +1,8 @@
+"""
+@autor: Juan Carlos Hernandez 
+@Fecha: 06/2022
+Fichero que controla entrenamiento del modelo yolo
+"""
 import tensorflow as tf
 from absl.flags import FLAGS
 

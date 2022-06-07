@@ -1,3 +1,8 @@
+"""
+@autor: Alberto Valls y Juan Carlos Hernández
+@Fecha: 06/2022
+Fichero que controla la llamada al servicio de movimiento del robot
+"""
 #importamos el mensaje
 from angletronics_ros2_custom_interface.srv import RutaReciclajeMsg
 #importamos la bib ROS2 para python

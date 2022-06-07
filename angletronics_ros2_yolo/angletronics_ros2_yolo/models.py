@@ -1,3 +1,8 @@
+"""
+@autor: Juan Carlos Hernandez 
+@Fecha: 06/2022
+Fichero que controla el tratamiento de imagen
+"""
 from absl import flags
 from absl.flags import FLAGS
 import numpy as np

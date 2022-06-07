@@ -1,3 +1,8 @@
+"""
+@autor: Juan Carlos Hernandez 
+@Fecha: 06/2022
+Fichero que controla el tratamiento de modelo y de imagen
+"""
 from absl import logging
 import numpy as np
 import tensorflow as tf

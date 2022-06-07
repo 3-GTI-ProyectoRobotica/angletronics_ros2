@@ -1,3 +1,8 @@
+"""
+@autor: Sergi Sirvent Sempere
+@Fecha: 06/2022
+Fichero que controla los inserts a la bbdd sobre los registros de reciclaje
+"""
 import mysql.connector
 
 mydb = mysql.connector.connect(

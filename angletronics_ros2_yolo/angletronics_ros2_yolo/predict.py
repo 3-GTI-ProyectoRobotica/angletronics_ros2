@@ -1,3 +1,8 @@
+"""
+@autor: Juan Carlos Hernandez 
+@Fecha: 06/2022
+Fichero que controla el tratamiento y la clasificación de las imágenes
+"""
 import rclpy
 from sensor_msgs.msg import Image
 from rclpy.node import Node
