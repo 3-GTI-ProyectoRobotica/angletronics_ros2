@@ -2,54 +2,111 @@
 import rclpy
 from rclpy.action import ActionServer
 from rclpy.node import Node
-from custom_interface.action import Move
+from angletronics_ros2_custom_interface.srv import RutaReciclajeMsg
+from angletronics_ros2_custom_interface.msg import RutaReciclajeParams
 from geometry_msgs.msg import Twist
 import time
 
 class MyActionServer(Node):
+    reciclaje_params = RutaReciclajeParams
 
     def __init__(self):
-        super().__init__('my_action_server')
-        #creamos el servidor de la accion
-        #con parametros : 
-        # nodo servidor,
+        #constructor con el nombre del nodo
+        super().__init__('movement_server')
+        timer_period = 2
+        # crea un timer 
+        self.timer = self.create_timer(timer_period, self.timer_callback)
+        # declara el objeto servicio pasando como parametros
         # tipo de mensaje
-        # nombre de la accion
-        # funcion a ejecutar
-        self.action_server = ActionServer(self, Move, 'moving_as', self.execute_callback )
-        # creamos objeto tipo Twist para enviar la velocidad del robot
-        self.cmd = Twist()
-        #creamos el publisher para el topic cmd_vel con parametros:
+        # nombre del servicio
+        # callback del servicio
+        self.srv = self.create_service(RutaReciclajeMsg, 'movement', self.my_first_service_callback)
+        # declara el objeto publisher pasando como parametros
         # tipo de mensaje
         # nombre del topic
         # tamaño de la cola
         self.publisher = self.create_publisher(Twist, 'cmd_vel', 10)
 
-    def execute_callback(self, goal_handle):
-        self.get_logger().info('Recibiendo el Goal...')
+        #declaracion de parametros variables
+        self.declare_parameter('contenedor', "desconocido")
+        self.reciclaje_params.contenedor = self.get_parameter('contenedor').get_parameter_value().string_value
 
-        feedback_msg = Move.Feedback()
-        feedback_msg.feedback = "Moviendo el robot a la izquierda..."
+    def timer_callback(self):
+        # cada timer_period segundos cargamos los parámetros en el mensaje
+        self.get_logger().info('El contenedor tiene la direccion : %s' %self.reciclaje_params.contenedor)
 
-        for i in range(1, goal_handle.request.secs):
-            self.get_logger().info('Feedback: '.format(feedback_msg.feedback))
-            goal_handle.publish_feedback(feedback_msg)
-            self.cmd.linear.x = 0.3
-            self.cmd.angular.z = 0.3
 
-            self.publisher.publish(self.cmd)
-            time.sleep(1)
+    def my_first_service_callback(self, request, response):
+        # recibe los parametros de esta clase
+        #  recibe el mensaje request
+        # devuelve el mensaje response
 
-        goal_handle.succeed()
+        # crea un mensaje tipo Twist 
+        msg = Twist()
 
-        #paramos el robot
-        self.cmd.linear.x = 0.0
-        self.cmd.angular.z = 0.0
-        self.publisher.publish(self.cmd)
-        feedback_msg.feedback = "¡Accion finalizada!"
-        result = Move.Result()
-        result.status = feedback_msg.feedback
-        return result
+        if request.move == "derecha":
+            # rellena el mensaje msg con la velocidad angular y lineal
+            # necesaria para hacer un giro a la derecha
+            msg.linear.x = 0.1
+            msg.angular.z = -0.5
+            # publica el mensaje
+            self.publisher.publish(msg)
+            # imprime mensaje informando del movimiento
+            self.get_logger().info('Girando hacia la derecha')
+            # devuelve la respuesta
+            response.success = True
+        elif request.move == "izquierda":
+            # rellena el mensaje msg con la velocidad angular y lineal
+            # necesaria para hacer un giro a la izquierda
+            msg.linear.x = 0.1
+            msg.angular.z = 0.5
+            # publica el mensaje
+            self.publisher.publish(msg)   
+            # imprime mensaje informando del movimiento
+            self.get_logger().info('Girando hacia la izquierda')
+            # devuelve la respuesta
+            response.success = True
+        elif request.move == "delante":
+            # rellena el mensaje msg con la velocidad angular y lineal
+            # necesaria para moverse hacia delante
+            msg.linear.x = 0.1
+            msg.angular.z = 0.0
+            # publica el mensaje
+            self.publisher.publish(msg)   
+            # imprime mensaje informando del movimiento
+            self.get_logger().info('Hacia delante')
+            # devuelve la respuesta
+            response.success = True
+        elif request.move == "atras":
+            # rellena el mensaje msg con la velocidad angular y lineal
+            # necesaria para moverse hacia atras
+            msg.linear.x = -0.1
+            msg.angular.z = 0.0
+            # publica el mensaje
+            self.publisher.publish(msg)   
+            # imprime mensaje informando del movimiento
+            self.get_logger().info('Hacia atras')
+            # devuelve la respuesta
+            response.success = True
+        elif request.move == "parar":
+            # rellena el mensaje msg con la velocidad angular y lineal
+            # necesaria para parar el robot
+            msg.linear.x = 0.0
+            msg.angular.z = 0.0
+            # publica el mensaje
+            self.publisher.publish(msg)   
+            # imprime mensaje informando del movimiento
+            self.get_logger().info('Parando')
+            # devuelve la respuesta
+            response.success = True
+        else:
+            # estado de la respuesta
+            # si no se ha dado ningun caso anterior
+            response.success = False
+
+        # devuelve la respuesta
+        return response
+
 
 def main(args=None):
     rclpy.init(args=args)
