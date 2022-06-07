@@ -1,3 +1,8 @@
+"""
+@autor: Juan Carlos Hernandez 
+@Fecha: 06/2022
+Fichero que controla la lógica sobre la captura de imagenes del robot 
+"""
 import rclpy
 import cv2
 import numpy as np
