@@ -39,8 +39,11 @@ endif()
 # Añadir la siguiente funcion
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/CircleParams.msg"
-  "srv/MyMoveMsg.srv"  #incluir esta
+  "srv/MyMoveMsg.srv"
   "srv/CircleMoveMsg.srv"
-  "action/Move.action" #incluir
+  "action/Move.action"
+  "msg/RutaReciclajeParams.msg"
+  "srv/RutaReciclajeMsg.srv"
 )
+
 ament_package()

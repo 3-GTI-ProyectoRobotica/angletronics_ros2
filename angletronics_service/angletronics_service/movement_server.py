@@ -1,10 +1,12 @@
 # Importar mensajes
 from geometry_msgs.msg import Twist
-from angletronics_ros2_custom_interface.srv import MyMoveMsg,CircleMoveMsg
+from angletronics_ros2_custom_interface.srv import MyMoveMsg,CircleMoveMsg,RutaReciclajeMsg
 from custom_interface.msg import CircleParams
 #importar  biblioteca Python ROS2
 import rclpy
 from rclpy.node import Node
+from .movement import NavToPose
+from geometry_msgs.msg import PoseStamped 
 
 class Service(Node):
     circle_params = CircleParams
@@ -19,12 +21,14 @@ class Service(Node):
 
         self.srv = self.create_service(MyMoveMsg, 'movement', self.my_first_service_callback)
         self.srv2 = self.create_service(CircleMoveMsg, 'circle_movement', self.callback_circle_movement)
+        self.srv3 = self.create_service(RutaReciclajeMsg, 'reciclaje_movement', self.callback_reciclaje)
 
         #declaracion de parametros variables
         self.declare_parameter('radio', 1.0)
         self.declare_parameter('velocidad', 0.22)
         self.declare_parameter('direccion', "izquierda")
-        
+        self.declare_parameter('contenedor', "desconocido")
+
         self.circle_params.radio = self.get_parameter('radio').get_parameter_value().double_value
         self.circle_params.velocidad = self.get_parameter('velocidad').get_parameter_value().double_value
         self.circle_params.direccion = self.get_parameter('direccion').get_parameter_value().string_value
@@ -38,6 +42,48 @@ class Service(Node):
         # tamaño de la cola
 
         self.publisher = self.create_publisher(Twist, 'cmd_vel', 10)
+
+
+    def callback_reciclaje(self,request,response):
+        # recibe los parametros de esta clase
+        #  recibe el mensaje request
+        # devuelve el mensaje response
+
+        action_client = NavToPose()
+
+        goal_pose = PoseStamped()
+        goal_pose.header.frame_id = 'map'
+        goal_pose.header.stamp = action_client.get_clock().now().to_msg()
+        
+    
+        
+        if request.contenedor == "verde":
+            goal_pose.pose.position.x = -2.78
+            goal_pose.pose.position.y = -1.07
+            goal_pose.pose.orientation.w = 1.0
+            
+            response.success = True
+        elif request.contenedor == "amarillo":
+            goal_pose.pose.position.x = -2.50
+            goal_pose.pose.position.y = -1.06
+            goal_pose.pose.orientation.w = 1.0
+
+            response.success = True
+
+
+        elif request.contenedor == "azul":
+            goal_pose.pose.position.x = -3.80
+            goal_pose.pose.position.y = -1.06
+            goal_pose.pose.orientation.w = 1.0
+            
+            response.success = True
+        
+        if(response.success):
+            self.get_logger().info('Desplazando a contenedor:'+request.contenedor)
+            future = action_client.send_goal(goal_pose) # se para secs como argumento
+            rclpy.spin(action_client)
+        
+        return response
 
     def my_first_service_callback(self, request, response):
         # recibe los parametros de esta clase

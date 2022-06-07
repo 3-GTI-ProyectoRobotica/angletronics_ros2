@@ -1,0 +1,7 @@
+string  contenedor # Contendor donde irá el robot
+            # "verde"
+            # "azul"
+            # "amarillo"
+            # "desconocido"
+---
+bool success #respuesta
